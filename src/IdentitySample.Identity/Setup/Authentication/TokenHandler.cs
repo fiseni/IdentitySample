@@ -96,7 +96,7 @@ public class TokenHandler : ITokenHandler
             claims.Add(new Claim("emails", user.Email.ToString()));
 
         if (user.Roles.Any())
-            claims.Add(new Claim("roles", string.Join(' ', user.Roles.Select(x => x.Name))));
+            claims.Add(new Claim("extension_roles", string.Join(' ', user.Roles.Select(x => x.Name))));
 
         return claims;
     }

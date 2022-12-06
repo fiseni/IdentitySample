@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace IdentitySample.Identity.Setup.Authentication;
 
-public static class AuthConfiguration
+public static class AuthExtensions
 {
     public const string JWT_KEY = "This is my supper secret key for testing";
 

@@ -1,5 +1,6 @@
 ﻿using IdentitySample.Identity.Api.Contracts;
 using IdentitySample.Identity.Api.Models;
+using IdentitySample.Identity.Setup.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -10,10 +11,12 @@ namespace IdentitySample.Api.Controllers;
 public class RoleController : ControllerBase
 {
     private readonly IRoleService _roleService;
+    private readonly IPermissionValidator _permissionValidator;
 
-    public RoleController(IRoleService roleService)
+    public RoleController(IRoleService roleService, IPermissionValidator permissionValidator)
     {
         _roleService = roleService;
+        _permissionValidator = permissionValidator;
     }
 
     [HttpGet("{id}")]
@@ -41,6 +44,9 @@ public class RoleController : ControllerBase
     {
         var result = await _roleService.CreateRoleAsync(role, cancellationToken);
 
+        var roles = await _roleService.GetRolesAsync(CancellationToken.None);
+        _permissionValidator.UpdateCache(roles);
+
         return Ok(result);
     }
 
@@ -51,6 +57,9 @@ public class RoleController : ControllerBase
     {
         var result = await _roleService.UpdateRoleAsync(id, role, cancellationToken);
 
+        var roles = await _roleService.GetRolesAsync(CancellationToken.None);
+        _permissionValidator.UpdateCache(roles);
+
         return Ok(result);
     }
 
@@ -59,6 +68,9 @@ public class RoleController : ControllerBase
     public async Task<ActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await _roleService.DeleteRoleAsync(id, cancellationToken);
+
+        var roles = await _roleService.GetRolesAsync(CancellationToken.None);
+        _permissionValidator.UpdateCache(roles);
 
         return Ok();
     }

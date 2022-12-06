@@ -15,7 +15,9 @@ public class AccountController : ControllerBase
     private readonly ITokenHandler _tokenHandler;
     private readonly IUserService _userService;
 
-    public AccountController(IAccountService accountService, ITokenHandler tokenHandler, IUserService userService)
+    public AccountController(IAccountService accountService,
+                             ITokenHandler tokenHandler,
+                             IUserService userService)
     {
         _accountService = accountService;
         _tokenHandler = tokenHandler;
@@ -38,6 +40,8 @@ public class AccountController : ControllerBase
     public async Task<ActionResult<TokenResponse>> Signin(SignInDto signInDto, CancellationToken cancellationToken = default)
     {
         var user = await _accountService.SignInAsync(signInDto, cancellationToken);
+
+        user = await _userService.GetUserAsync(user.Id, CancellationToken.None);
 
         var token = await _tokenHandler.CreateTokensAsync(user);
 

@@ -16,7 +16,7 @@ public class PermissionAuthorizationRequirement : AuthorizationHandler<Permissio
         if (context.User is not null)
         {
             var rolesClaim = context.User.Claims.FirstOrDefault(
-                c => c.Type.Equals("roles", StringComparison.OrdinalIgnoreCase));
+                c => c.Type.Equals("extension_roles", StringComparison.OrdinalIgnoreCase));
 
             if (rolesClaim is not null)
             {
