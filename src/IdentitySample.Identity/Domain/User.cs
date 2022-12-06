@@ -19,8 +19,10 @@ public class User : IdentityUser<Guid>
 
     public User(string firstName, string lastName, string email)
     {
-        Email = email;
         Update(firstName, lastName);
+        Email = email;
+        UserName = email;
+        EmailConfirmed = true;
     }
 
     [MemberNotNull(nameof(FirstName), nameof(LastName))]
