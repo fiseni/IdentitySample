@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IdentitySample.Identity.Domain;
 
@@ -18,18 +19,21 @@ public class User : IdentityUser<Guid>
 
     public User(string firstName, string lastName, string email)
     {
-        FirstName = firstName;
-        LastName = lastName;
         Email = email;
+        Update(firstName, lastName);
     }
 
+    [MemberNotNull(nameof(FirstName), nameof(LastName))]
     public void Update(string firstName, string lastName)
     {
+        if (string.IsNullOrEmpty(firstName)) throw new ArgumentNullException(nameof(firstName));
+        if (string.IsNullOrEmpty(lastName)) throw new ArgumentNullException(nameof(lastName));
+
         FirstName = firstName;
         LastName = lastName;
     }
 
-    public void UpdateRoles(IEnumerable<Guid> roleIds)
+    public void UpdateRoles(IEnumerable<Guid>? roleIds)
     {
         if (roleIds is null) return;
 

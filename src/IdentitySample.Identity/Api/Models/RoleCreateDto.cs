@@ -4,5 +4,5 @@ public class RoleCreateDto
 {
     public string Name { get; set; } = default!;
 
-    public List<int>? SelectedPermissionIds { get; set; }
+    public List<int>? SelectedPermissionKeys { get; set; }
 }

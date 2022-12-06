@@ -24,6 +24,8 @@ public class AppIdentityDbInitializer
 
     public async Task Seed()
     {
+        await _dbContext.Database.EnsureCreatedAsync();
+
         await SeedRoles();
         await SeedUsers();
     }
