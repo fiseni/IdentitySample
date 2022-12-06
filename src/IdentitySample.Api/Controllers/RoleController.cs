@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace IdentitySample.Api.Controllers;
 
 [ApiController]
+[Route("identity/roles")]
 public class RoleController : ControllerBase
 {
     private readonly IRoleService _roleService;

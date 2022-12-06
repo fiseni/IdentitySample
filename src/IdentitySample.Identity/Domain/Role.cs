@@ -4,6 +4,8 @@ namespace IdentitySample.Identity.Domain;
 
 public class Role : IdentityRole<Guid>
 {
+    private Role() { }
+
     public Role(string roleName) : base(roleName)
     {
     }

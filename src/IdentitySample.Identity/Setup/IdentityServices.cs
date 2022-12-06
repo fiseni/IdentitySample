@@ -48,6 +48,8 @@ public static class IdentityServices
 
     public static void AddIdentityServices(this IServiceCollection services, IdentityConfig identityConfig)
     {
+        services.AddAutoMapper(typeof(IdentityMarker).Assembly);
+
         services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(identityConfig.ConnectionString));
         services.AddScoped<AppIdentityDbInitializer>();
 

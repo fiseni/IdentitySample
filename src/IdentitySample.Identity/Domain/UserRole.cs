@@ -7,6 +7,8 @@ public class UserRole : IdentityUserRole<Guid>
     public User User { get; private set; } = default!;
     public Role Role { get; private set; } = default!;
 
+    public UserRole() { }
+
     public UserRole(Guid userId, Guid roleId)
     {
         UserId = userId;

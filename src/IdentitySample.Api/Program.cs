@@ -9,6 +9,8 @@ builder.Configuration.Bind(AuthConfig.CONFIG_NAME, AuthConfig.Instance);
 
 builder.Services.AddIdentityServices(IdentityConfig.Instance);
 builder.AddLocalAuthentication(AuthConfig.Instance);
+
+builder.Services.AddMemoryCache();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

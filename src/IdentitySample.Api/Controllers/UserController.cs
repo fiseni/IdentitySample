@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace IdentitySample.Api.Controllers;
 
 [ApiController]
+[Route("identity/users")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -26,9 +27,9 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [SwaggerOperation(Summary = "List users", Tags = new[] { "User" })]
-    public async Task<ActionResult<UserDto>> List(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<UserDto>> List(CancellationToken cancellationToken = default)
     {
-        var result = await _userService.GetUserAsync(id, cancellationToken);
+        var result = await _userService.GetUsersAsync(cancellationToken);
 
         return Ok(result);
     }
