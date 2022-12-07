@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace IdentitySample.Identity.Setup.Authorization;
 
@@ -16,7 +17,7 @@ public class PermissionAuthorizationRequirement : AuthorizationHandler<Permissio
         if (context.User is not null)
         {
             var rolesClaim = context.User.Claims.FirstOrDefault(
-                c => c.Type.Equals("extension_roles", StringComparison.OrdinalIgnoreCase));
+                c => c.Type.Equals(ClaimTypes.Role, StringComparison.OrdinalIgnoreCase));
 
             if (rolesClaim is not null)
             {
