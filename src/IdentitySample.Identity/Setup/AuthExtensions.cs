@@ -1,4 +1,5 @@
 ﻿using IdentitySample.Identity.Domain;
+using IdentitySample.Identity.Setup.Authentication;
 using IdentitySample.Identity.Setup.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace IdentitySample.Identity.Setup.Authentication;
+namespace IdentitySample.Identity.Setup;
 
 public static class AuthExtensions
 {
@@ -16,7 +17,7 @@ public static class AuthExtensions
         .RequireAuthenticatedUser()
         .Build();
 
-    public static void AddLocalAuthentication(this WebApplicationBuilder builder, AuthConfig authConfig)
+    public static void AddAppAuthentication(this WebApplicationBuilder builder, AuthConfig authConfig)
     {
         var tokenOptions = authConfig.GetTokenOptions(builder.Configuration);
         builder.Services.AddSingleton(tokenOptions);
@@ -24,14 +25,7 @@ public static class AuthExtensions
         var signingConfigurations = new SigningConfigurations(authConfig.Secret);
         builder.Services.AddSingleton(signingConfigurations);
 
-        builder.Services.AddProductionAuthentication(authConfig, signingConfigurations);
-
-        builder.Services.AddPolicies();
-    }
-
-    private static void AddProductionAuthentication(this IServiceCollection services, AuthConfig authConfig, SigningConfigurations signingConfigurations)
-    {
-        services.AddAuthentication(options =>
+        builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,9 +45,9 @@ public static class AuthExtensions
         });
     }
 
-    public static void AddPolicies(this IServiceCollection services)
+    public static void AddAppAuthorization(this WebApplicationBuilder builder)
     {
-        services.AddAuthorization(options =>
+        builder.Services.AddAuthorization(options =>
         {
             options.DefaultPolicy = DefaultPolicy;
 

@@ -1,5 +1,4 @@
 ﻿using IdentitySample.Identity.Setup;
-using IdentitySample.Identity.Setup.Authentication;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +7,9 @@ builder.Configuration.Bind(IdentityConfig.CONFIG_NAME, IdentityConfig.Instance);
 builder.Configuration.Bind(AuthConfig.CONFIG_NAME, AuthConfig.Instance);
 
 builder.Services.AddIdentityServices(IdentityConfig.Instance);
-builder.AddLocalAuthentication(AuthConfig.Instance);
+
+builder.AddAppAuthentication(AuthConfig.Instance);
+builder.AddAppAuthorization();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddEndpointsApiExplorer();
