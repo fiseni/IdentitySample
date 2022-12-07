@@ -21,6 +21,7 @@ public class TestController : ControllerBase
     }
 
     [HttpGet("/test-read")]
+    [Authorize(Policy = "TestRead")]
     [SwaggerOperation(Summary = "Test with read permission", Tags = new[] { "Test" })]
     public ActionResult Test1(CancellationToken cancellationToken)
     {
@@ -28,6 +29,7 @@ public class TestController : ControllerBase
     }
 
     [HttpGet("/test-write")]
+    [Authorize(Policy = "TestWrite")]
     [SwaggerOperation(Summary = "Test with write permission", Tags = new[] { "Test" })]
     public ActionResult Test2(CancellationToken cancellationToken)
     {
